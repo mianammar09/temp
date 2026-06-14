@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy 5 Years of our Bond ❤️</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --love-glow: #ff2a5f;
+      --neon-cyan: #00f0ff;
+      --accent-gold: #ffb703;
+      --dark-space: #010206;
+      --error-orange: #ff5722;
+    }
+
+    /* Total Scrollbar Removal Across Universal Web Frameworks */
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--dark-space);
+      color: #ffffff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      -ms-overflow-style: none;  /* Internet Explorer/Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+
+    body::-webkit-scrollbar {
+      display: none; /* Safari and Chrome */
+    }
+
+    /* Full-screen Entry Gatekeeper Layer */
+    #gatekeeper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at center, #090a1a 0%, #010206 100%);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1.5s ease-in-out, visibility 1.5s;
+    }
+
+    .enter-btn {
+      background: transparent;
+      border: 2px solid var(--love-glow);
+      color: #fff;
+      padding: 15px 45px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 50px;
+      letter-spacing: 3px;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(255, 42, 95, 0.4);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .enter-btn:hover {
+      background: var(--love-glow);
+      box-shadow: 0 0 50px var(--love-glow);
+      transform: scale(1.08);
+    }
+
+    /* Fixed Three.js Viewport Layer */
+    #canvas-3d-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Main Scrolling Content Overlay Container */
+    .content-overlay {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      pointer-events: none; 
+    }
+
+    .content-overlay * {
+      pointer-events: auto; 
+    }
+
+    .intro-header {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .intro-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 6rem;
+      background: linear-gradient(45deg, var(--love-glow), var(--accent-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 35px rgba(255, 42, 95, 0.6));
+      animation: titleFloat 4s infinite ease-in-out;
+    }
+
+    /* Real-Time Metrics Countdown Display */
+    .counter-container {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      background: rgba(7, 10, 24, 0.5);
+      padding: 15px 30px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+    }
+
+    .counter-box { text-align: center; }
+    .counter-num { font-size: 1.6rem; font-weight: 800; color: var(--neon-cyan); }
+    .counter-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: #a0aec0; }
+
+    /* Journey Nodes Architecture Track */
+    .timeline-track { padding: 150px 0; }
+
+    .milestone-container {
+      position: relative;
+      margin-bottom: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1200px;
+    }
+
+    /* Advanced Glassmorphic 3D Card Elements */
+    .glass-card-3d {
+      background: rgba(4, 6, 14, 0.45);
+      backdrop-filter: blur(35px);
+      -webkit-backdrop-filter: blur(35px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 28px;
+      padding: 30px;
+      width: 90%;
+      max-width: 450px;
+      transform: translateY(60px) scale(0.88);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      opacity: 0.05;
+      transition: all 0.9s cubic-bezier(0.1, 1, 0.1, 1);
+    }
+
+    .milestone-container.active-focus .glass-card-3d {
+      transform: translateY(0) scale(1.05);
+      opacity: 1;
+      border-color: var(--love-glow);
+      box-shadow: 0 0 50px rgba(255, 42, 95, 0.4);
+    }
+
+    .date-badge {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+      letter-spacing: 2px;
+      background: rgba(255, 183, 3, 0.1);
+      border: 1px solid rgba(255, 183, 3, 0.3);
+      padding: 6px 16px;
+      border-radius: 50px;
+      display: inline-block;
+    }
+
+    .harddrive-img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-top: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Fixed Anchored Mickey Mouse Driving Node Overlay */
+    .mickey-car-anchor {
+      position: fixed;
+      left: 50%;
+      bottom: 8%;
+      transform: translateX(-50%);
+      z-index: 5;
+      pointer-events: none;
+      transition: transform 0.25s cubic-bezier(0.104, 2.04, 0.492, 0.79);
+    }
+
+    .mickey-car-gif {
+      width: 125px;
+      filter: drop-shadow(0 20px 15px rgba(0,0,0,0.8));
+    }
+
+    /* Grand Finale Vault Section Container */
+    .outro-section {
+      min-height: 100vh;
+      padding: 120px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .letter-vault {
+      max-width: 700px;
+      background: rgba(2, 3, 8, 0.92);
+      border: 2px solid var(--love-glow);
+      border-radius: 36px;
+      padding: 50px;
+      box-shadow: 0 0 80px rgba(255, 42, 95, 0.5);
+      text-align: center;
+      backdrop-filter: blur(25px);
+    }
+
+    .letter-vault p {
+      font-size: 1.18rem;
+      line-height: 2;
+      color: #f3f4f6;
+      text-align: justify;
+    }
+
+    .signature-note {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.6rem;
+      color: var(--accent-gold);
+    }
+
+    /* Interactive Holographic Camera Matrix Upload Input Box */
+    .camera-upload-matrix {
+      border: 2px dashed rgba(0, 240, 255, 0.3);
+      background: rgba(0, 240, 255, 0.02);
+      border-radius: 24px;
+      padding: 30px 20px;
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.4s ease;
+    }
+
+    .camera-upload-matrix:hover {
+      border-color: var(--neon-cyan);
+      background: rgba(0, 240, 255, 0.05);
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.2);
+    }
+
+    .camera-upload-matrix.has-photo {
+      border-color: var(--love-glow);
+      background: rgba(255, 42, 95, 0.03);
+    }
+
+    #imageCaptureInput {
+      display: none; /* Fully hidden file interaction handling */
+    }
+
+    .captured-face-preview {
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 2px solid var(--love-glow);
+      box-shadow: 0 0 30px rgba(255, 42, 95, 0.3);
+      display: none;
+      animation: photoSnapIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* Validation Status Notification Blocks */
+    .error-exception-toast {
+      color: var(--error-orange);
+      background: rgba(255, 87, 34, 0.1);
+      border: 1px solid rgba(255, 87, 34, 0.3);
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 15px;
+      display: none;
+      animation: shakeValidation 0.4s ease;
+    }
+
+    @keyframes titleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    @keyframes photoSnapIn {
+      0% { transform: scale(0.7) rotate(-3deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0); opacity: 1; }
+    }
+
+    @keyframes shakeValidation {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+
+    @media (max-width: 576px) {
+      .intro-title { font-size: 3.5rem; }
+      .glass-card-3d { transform: none !important; opacity: 1 !important; }
+      .mickey-car-gif { width: 95px; }
+      .counter-container { padding: 10px 15px; gap: 8px; }
+      .counter-num { font-size: 1.1rem; }
+      .letter-vault { padding: 25px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="gatekeeper">
+    <h2 class="text-white mb-2" style="font-family:'Dancing Script', cursive; font-size: 3.5rem;">Our Story Asset Locker</h2>
+    <p class="text-white-50 small mb-4 text-center px-3">Turn up your volume to initialize the synchronized timeline matrix.</p>
+    <button class="enter-btn" id="btn-unlock">BEGIN OUR JOURNEY</button>
+  </div>
+
+  <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" loop></audio>
+
+  <div id="canvas-3d-container"></div>
+
+  <div class="mickey-car-anchor" id="mickeyCarBlock">
+    <img src="https://raw.githubusercontent.com/mianammar09/temp/b6ab23159b6ca716e33d79982d0e86180f2ce6b7/car.png" class="mickey-car-gif" id="carImg" alt="Mickey Driving Engine">
+  </div>
+
+  <div class="content-overlay">
+    
+    <div class="intro-header">
+      <h1 class="intro-title">5 Years of Us</h1>
+      <p class="text-white-50 text-uppercase tracking-wider small px-3">Scroll down to trace our milestones on the highway of memories...</p>
+      
+      <div class="counter-container">
+        <div class="counter-box"><div class="counter-num" id="c-days">00</div><div class="counter-label">Days</div></div>
+        <div class="counter-box"><div class="counter-num" id="c-hours">00</div><div class="counter-label">Hrs</div></div>
+        <div class="counter-box"><div class="counter-num" id="c-mins">00</div><div class="counter-label">Mins</div></div>
+        <div class="counter-box"><div class="counter-num" id="c-secs">00</div><div class="counter-label">Secs</div></div>
+      </div>
+      <div class="mt-5 text-danger opacity-50"><i class="fa-solid fa-angles-down fa-2x"></i></div>
+    </div>
+
+    <div class="timeline-track">
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">21st June 2021</span>
+          <h4 class="mt-3 text-danger"><i class="fa-solid fa-comment-dots me-2"></i>The First Whisper</h4>
+          <p class="small text-white-50">An inbox notification story reply: <strong>"Village ❤️"</strong>. The spark that built our universe from formal talks.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/52b0aa505a033ae052dfe6525de3ec80a3f01b4d/1st.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">29th September 2021</span>
+          <h4 class="mt-3 text-info"><i class="fa-brands fa-snapchat me-2"></i>Snapchat Streaks</h4>
+          <p class="small text-white-50">We officially added each other on Snapchat and locked down our first daily streak connection.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/2nd.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">07th October 2021</span>
+          <h4 class="mt-3 text-warning"><i class="fa-brands fa-instagram me-2"></i>Instagram Chats</h4>
+          <p class="small text-white-50">Expanding our social circles. Casual daily updates and interactions began on Instagram.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/3rd.png"  class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">12th November 2021</span>
+          <h4 class="mt-3 text-success"><i class="fa-brands fa-whatsapp me-2"></i>The Digital Shift</h4>
+          <p class="small text-white-50">You shared your WhatsApp number for an assignment video file. From a helpful transition to an online best friendship.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/4th.png"  class="harddrive-img" alt="Memory Frame">          '" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">28th March 2024</span>
+          <h4 class="mt-3 text-danger"><i class="fa-solid fa-cake-candles me-2"></i>The Cake Surprise</h4>
+          <p class="small text-white-50">The day you completely caught me off guard. You surprised me with a birthday cake when I least expected it.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/5th.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">25th August 2024</span>
+          <h4 class="mt-3 text-secondary"><i class="fa-solid fa-hourglass-end me-2"></i>A Silent Signal</h4>
+          <p class="small text-white-50">I wished you a happy birthday, but left a painful sign pointing toward an ending—the weight of dynamic changes.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/6th.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">28th August 2024</span>
+          <h4 class="mt-3 text-light"><i class="fa-solid fa-heart-break me-2"></i>More Than Friends</h4>
+          <p class="small text-white-50">The hard confession. I finally told you my feelings ran deeper than just friendship, demanding we pull apart.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/7th.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">12th September 2024</span>
+          <h4 class="mt-3 text-success"><i class="fa-solid fa-rotate-left me-2"></i>Gravity Pulls Back</h4>
+          <p class="small text-white-50">Gravity won. We found our path back together and started talking again, unable to let go.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/8th.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">23rd October 2024</span>
+          <h4 class="mt-3 text-primary"><i class="fa-solid fa-utensils me-2"></i>Face to Face (Sahiwal)</h4>
+          <p class="small text-white-50">Feaster Restaurant, Sahiwal. Meeting eyes for the very first time. You brought me those antique coins I asked for.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/9th.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">Late Autumn 2024</span>
+          <h4 class="mt-3 text-warning"><i class="fa-solid fa-link me-2"></i>An Unbreakable Shield</h4>
+          <p class="small text-white-50">Our connection shifted gears. The space between us tightened into an even stronger, deeply anchored bond.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/10th.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">06th November 2024</span>
+          <h4 class="mt-3 text-danger"><i class="fa-solid fa-hands-holding me-2"></i>Choosing to Stay</h4>
+          <p class="small text-white-50">You were feeling entirely overwhelmed with life. At that exact moment, I made an internal vow to stand securely right beside you.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/11th.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">12th July 2025</span>
+          <h4 class="mt-3 text-info"><i class="fa-solid fa-shirt me-2"></i>The Autograph Shirt</h4>
+          <p class="small text-white-50">Sahiwal meet up. You left your personal autograph physically written across my shirt—a permanent anchor of value.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/12th.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">Late 2025</span>
+          <h4 class="mt-3 text-warning"><i class="fa-solid fa-bolt me-2"></i>Fights & Fierce Love</h4>
+          <p class="small text-white-50">Fighting daily yet loving fiercely. Total proof that no matter the dynamic storms, we are entirely enough for one another.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/13th.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+      <div class="milestone-container">
+        <div class="glass-card-3d">
+          <span class="date-badge">Present Day</span>
+          <h4 class="mt-3 text-danger"><i class="fa-solid fa-heart-pulse me-2"></i>Five Years Standing</h4>
+          <p class="small text-white-50">The raw desperation has settled, but the truth remains absolute: Five years later, we are still standing firm.</p>
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/ec5e3435b380d4aba56934907da85b4d676c1fbe/14th.png" class="harddrive-img" alt="Memory Frame">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="outro-section">
+      <div class="letter-vault">
+        <div class="mb-4">
+          <img src="https://raw.githubusercontent.com/mianammar09/temp/b6ab23159b6ca716e33d79982d0e86180f2ce6b7/tease.png" style="width: 110px;" alt="Stitch Asset Display">
+        </div>
+        <h2 class="mb-4 text-danger fw-bold" style="font-family: 'Dancing Script', cursive; font-size: 3.8rem;">Happy 5 Years of our Bond ❤️</h2>
+        
+        <p>
+          We never planned to know each other, and we started out as strangers from completely different worlds, miles apart. But Allah’s plan was always for our paths to cross.
+
+Against all odds, we met, and we’ve spent five incredible years together—filled with laughter, deep care, and our fair share of petty fights. It has taught me that we are nothing without Allah’s decree, but I constantly pray that He keeps our bond stronger than anything else. I hope we get to spend another 50 years teasing and annoying each other.
+
+I don't know exactly what's going through your mind right now. I know I don't always do enough or know how to pull off the perfect surprise, which is why I built this little thing for you. So, please smile for a moment. I might be a bit dumb sometimes, but I’m glad I’m your kind of okay.
+        
+        <div class="signature-note mt-4 mb-2">Your Ammar,</div>
+        <hr class="border-secondary my-4">
+
+        <div class="text-start">
+          
+          <label class="form-label text-cyan fw-bold style-label" style="color: var(--neon-cyan);"><i class="fa-solid fa-camera me-2"></i>Step 1: Click Your Smiling Face Picture Here</label>
+          <div class="camera-upload-matrix mb-4" id="cameraBoxAnchor">
+            <div id="uploadPromptText">
+              <i class="fa-solid fa-expand fa-2x mb-2 text-info opacity-75"></i>
+              <p class="m-0 small text-white-50">Tap here to open camera & capture your smile</p>
+            </div>
+            <img id="faceCapturePreview" class="captured-face-preview" alt="Your Beautiful Captured Smile">
+            <input type="file" id="imageCaptureInput" accept="image/*" capture="user">
+          </div>
+
+          <label for="replyInput" class="form-label text-info fw-bold"><i class="fa-regular fa-paper-plane me-2"></i>Step 2: Transmit Your Thoughts Back Directly to His Screen</label>
+          <textarea id="replyInput" class="form-control bg-dark text-white border-secondary" rows="4" placeholder="Type what's inside your heart..."></textarea>
+          
+          <div class="error-exception-toast" id="errorFeedbackToast">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i><span id="errorMsgText">Validation tracking warning execution parameters active.</span>
+          </div>
+
+          <button id="sendBtn" class="btn btn-danger w-100 mt-3 fw-bold rounded-pill p-3 text-uppercase tracking-wider shadow-lg">Lock & Send Thoughts</button>
+        </div>
+        <div id="statusMessage" class="mt-3 small fw-bold text-success text-center"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    // INSERT PROJECTS FIREBASE CREDENTIAL CONFIGURATIONS HERE
+const firebaseConfig = {
+  apiKey: "AIzaSyBTfAKaDxbyhZ-YzXJ_h_DEp3MC_U3JQXc",
+  authDomain: "yearsofus-1a0c8.firebaseapp.com",
+  databaseURL: "https://yearsofus-1a0c8-default-rtdb.firebaseio.com",
+  projectId: "yearsofus-1a0c8",
+  storageBucket: "yearsofus-1a0c8.firebasestorage.app",
+  messagingSenderId: "94936307089",
+  appId: "1:94936307089:web:1c6ebe4bb1035d5dba3630",
+  measurementId: "G-14SDTETFKB"
+};
+
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    let globalBase64Image = ""; // State block tracking captured image string arrays
+
+    // Handle Native Camera Selection Events 
+    const cameraBox = document.getElementById('cameraBoxAnchor');
+    const imageInput = document.getElementById('imageCaptureInput');
+    const previewImg = document.getElementById('faceCapturePreview');
+    const textPrompt = document.getElementById('uploadPromptText');
+
+    cameraBox.addEventListener('click', () => imageInput.click());
+
+    imageInput.addEventListener('change', (event) => {
+      const selectedFile = event.target.files[0];
+      if (selectedFile) {
+        const fileReader = new FileReader();
+        fileReader.onload = function(e) {
+          globalBase64Image = e.target.result; // Saves structural string matrix locally
+          previewImg.src = globalBase64Image;
+          previewImg.style.display = 'block';
+          textPrompt.style.display = 'none';
+          cameraBox.classList.add('has-photo');
+        };
+        fileReader.readAsDataURL(selectedFile);
+      }
+    });
+
+    // Double-Lock Input Validation Submission System
+    document.getElementById('sendBtn').addEventListener('click', () => {
+      const textMessage = document.getElementById('replyInput').value.trim();
+      const statusElement = document.getElementById('statusMessage');
+      const errorToast = document.getElementById('errorFeedbackToast');
+      const errorLabel = document.getElementById('errorMsgText');
+      
+      // Clear current UI system alert loops
+      errorToast.style.display = "none";
+      statusElement.innerText = "";
+
+      // Comprehensive Exception Rules Checking Block
+      try {
+        if (!globalBase64Image && textMessage === "") {
+          throw new Error("Both requirements missing! Please snap your smiling face picture AND write your thoughts before sending! ❤️");
+        }
+        if (!globalBase64Image) {
+          throw new Error("Your photo is missing! Please tap the camera box above to snap your smiling face picture. 📸");
+        }
+        if (textMessage === "") {
+          throw new Error("Your thoughts are missing! Please write down what's inside your heart before hitting send. ✍️");
+        }
+
+        // Processing Valid Input Channels
+        statusElement.style.color = "#ffb703";
+        statusElement.innerText = "Encrypting data matrices and transmitting memory tokens directly to his screen...";
+
+        const DB_Reference_Node = ref(database, 'anniversary_replies_v2');
+        set(push(DB_Reference_Node), {
+          message: textMessage,
+          captured_photo: globalBase64Image,
+          timestamp: new Date().toISOString()
+        }).then(() => {
+          statusElement.style.color = "#00f0ff";
+          statusElement.innerText = "Everything saved and sent safely directly to his screen! Thank you for smiling. 😊";
+          
+          // Clear forms layout metrics upon completion
+          document.getElementById('replyInput').value = "";
+          globalBase64Image = "";
+          previewImg.style.display = 'none';
+          textPrompt.style.display = 'block';
+          cameraBox.classList.remove('has-photo');
+        }).catch((databaseWriteException) => {
+          statusElement.style.color = "#ff2a5f";
+          statusElement.innerText = "Database connection error. Please review your active internet connectivity guidelines.";
+          console.error(databaseWriteException);
+        });
+
+      } catch (validationException) {
+        // Handle Exception Display Execution
+        errorLabel.innerText = validationException.message;
+        errorToast.style.display = "block";
+        errorToast.style.animation = "none";
+        setTimeout(() => errorToast.style.animation = "shakeValidation 0.4s ease", 10);
+      }
+    });
+  </script>
+
+  <script>
+    // 1. Interactive Loader Controller Loop
+    const gatekeeper = document.getElementById('gatekeeper');
+    const audioTrack = document.getElementById('bg-music');
+    
+    document.getElementById('btn-unlock').addEventListener('click', () => {
+      audioTrack.play().catch(e => console.log("Sound execution channel active. Settings deferred."));
+      gatekeeper.style.opacity = '0';
+      setTimeout(() => gatekeeper.style.display = 'none', 1500);
+    });
+
+    // 2. Realtime Precise Metric Bond Timer 
+    const startDate = new Date("June 21, 2021 00:00:00").getTime();
+    function computeTimeMetrics() {
+      const difference = new Date().getTime() - startDate;
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      document.getElementById('c-days').innerText = days < 10 ? '0' + days : days;
+      document.getElementById('c-hours').innerText = hours < 10 ? '0' + hours : hours;
+      document.getElementById('c-mins').innerText = minutes < 10 ? '0' + minutes : minutes;
+      document.getElementById('c-secs').innerText = seconds < 10 ? '0' + seconds : seconds;
+    }
+    setInterval(computeTimeMetrics, 1000);
+
+    // 3. Three.js Engine Matrix Construction (Infinite Road & Cosmic Stars Space)
+    const container = document.getElementById('canvas-3d-container');
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x010206, 0.007);
+
+    const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    const pointLight = new THREE.PointLight(0xff2a5f, 2, 50);
+    pointLight.position.set(0, 5, 5);
+    scene.add(pointLight);
+
+    // Build the Visible 3D Road Mesh Engine Geometry
+    const roadWidth = 8;
+    const roadLength = 600;
+    const roadGeo = new THREE.PlaneGeometry(roadWidth, roadLength, 30, 150);
+    const roadMat = new THREE.MeshStandardMaterial({ color: 0x070913, roughness: 0.8, metalness: 0.2 });
+    const roadMesh = new THREE.Mesh(roadGeo, roadMat);
+    roadMesh.rotation.x = -Math.PI / 2;
+    roadMesh.position.set(0, -4, -180);
+    scene.add(roadMesh);
+
+    // Winding Left & Right Neon Road Edge Rails Layout Arrays
+    const leftRailPoints = [], rightRailPoints = [], centerStripPoints = [];
+    for (let i = 0; i < 200; i++) {
+      let zPos = -i * 4;
+      let xOffset = Math.sin(i * 0.08) * 2.5; 
+      leftRailPoints.push(new THREE.Vector3(-roadWidth/2 + xOffset, -3.95, zPos));
+      rightRailPoints.push(new THREE.Vector3(roadWidth/2 + xOffset, -3.95, zPos));
+      if (i % 2 === 0) {
+        centerStripPoints.push(new THREE.Vector3(xOffset, -3.95, zPos));
+        centerStripPoints.push(new THREE.Vector3(xOffset, -3.95, zPos - 2));
+      }
+    }
+
+    const leftLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints(leftRailPoints), new THREE.LineBasicMaterial({ color: 0xff2a5f }));
+    const rightLine = new THREE.Line(new THREE.BufferGeometry().setFromPoints(rightRailPoints), new THREE.LineBasicMaterial({ color: 0x00f0ff }));
+    const centerLines = new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(centerStripPoints), new THREE.LineBasicMaterial({ color: 0xffffff }));
+    scene.add(leftLine, rightLine, centerLines);
+
+    // Build Premium Interstellar Particle Starfield
+    const starCount = 1500;
+    const starGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(starCount * 3);
+    const colors = new Float32Array(starCount * 3);
+
+    for(let i=0; i < starCount * 3; i+=3) {
+      positions[i] = (Math.random() - 0.5) * 60;
+      positions[i+1] = (Math.random() - 0.5) * 40 + 5; 
+      positions[i+2] = Math.random() * -600;
+      if(Math.random() > 0.4) {
+        colors[i] = 1; colors[i+1] = 0.16; colors[i+2] = 0.37;
+      } else {
+        colors[i] = 0; colors[i+1] = 0.94; colors[i+2] = 1;
+      }
+    }
+    starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    starGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    const starfield = new THREE.Points(starGeo, new THREE.PointsMaterial({ size: 0.35, vertexColors: true, transparent: true, opacity: 0.85, blending: THREE.AdditiveBlending }));
+    scene.add(starfield);
+
+    camera.position.set(0, 0, 5);
+
+    // 4. Smooth Render & Interpolation Tracking Execution Loop Engine
+    let targetScrollY = window.scrollY;
+    let currentScrollY = window.scrollY;
+    const carImg = document.getElementById('carImg');
+
+    window.addEventListener('scroll', () => {
+      targetScrollY = window.scrollY;
+    });
+
+    function renderSystemLoop() {
+      requestAnimationFrame(renderSystemLoop);
+
+      // Interpolation (lerp) configuration to smooth scrolling metrics across high hertz platforms
+      let scrollDelta = targetScrollY - currentScrollY;
+      currentScrollY += scrollDelta * 0.08; // Buttery dampening linear math calculation
+
+      let movementVelocity = (scrollDelta * 0.08) + 0.35;
+      
+      roadMesh.position.z += movementVelocity;
+      leftLine.position.z += movementVelocity;
+      rightLine.position.z += movementVelocity;
+      centerLines.position.z += movementVelocity;
+      starfield.position.z += movementVelocity * 1.5;
+
+      if (leftLine.position.z > 40) {
+        roadMesh.position.z = 0; leftLine.position.z = 0; rightLine.position.z = 0; centerLines.position.z = 0;
+      }
+      if (starfield.position.z > 200) starfield.position.z = 0;
+
+      // Curve Path Tracking & Sway Logic
+      let curveTrackingFactor = Math.sin(currentScrollY * 0.002) * 12;
+      let scrollTiltFactor = Math.min(Math.max(scrollDelta * 0.3, -20), 20);
+      
+      carImg.style.transform = `translateX(${curveTrackingFactor}px) rotate(${scrollTiltFactor}deg) scale(${1 + Math.abs(scrollDelta)*0.002})`;
+      camera.position.x = THREE.MathUtils.lerp(camera.position.x, curveTrackingFactor * 0.02, 0.05);
+
+      renderer.render(scene, camera);
+    }
+    renderSystemLoop();
+
+    // 5. High-Fidelity Resizing Interfaces
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // 6. Viewport Target Intersector Node Active Observers
+    const milestones = document.querySelectorAll('.milestone-container');
+    window.addEventListener('scroll', () => {
+      const activeTriggerBoundary = window.innerHeight / 1.6;
+      milestones.forEach(milestone => {
+        if(milestone.getBoundingClientRect().top < activeTriggerBoundary) {
+          milestone.classList.add('active-focus');
+        } else {
+          milestone.classList.remove('active-focus');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
